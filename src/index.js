@@ -1,9 +1,36 @@
 const prompt = require("prompt-sync")();
 
+promemoria = [];
 let scelta = 0;
 
+function confrontaDate(){
+    const dataCorrente = new Date();
+    if (dataCorrente < data) {
+      return 1;
+    } else if (dataCorrente >= data) {
+      return 0;
+    }
+}
+
+function aggiungi(){
+    let nome, mese, giorno, ora;
+    console.log("Inserire l'attività (frase breve e concisa): ");
+    nome = prompt();
+    console.log("Inserire il mese scadenza: ");
+    do{
+        mese = prompt();
+    }while(mese <= 0 || mese > 12);
+    console.log("Inserire il giorno scadenza: ");
+    giorno = promot();
+    console.log("Inserire l'ora scadenza: ");
+    ora = prompt();
+    promemoria.push({nome:nome,mese:mese,giorno:giorno,ora:ora});
+}
+
 function mostraPrimi(){
-    
+    for(let i=0;i<promemoria.length;i++){
+
+    }
 }
 
 do{
