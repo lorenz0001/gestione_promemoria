@@ -59,10 +59,34 @@ export function mostraPrimi(promemoria){
     }
 }
 
-export function cancella(promemoria, prompt){
-    mostraTutti();
-    console.log("Inserire id: ");
-    
+export function cancella(promemoria, prompt) {
+    mostraTutti(promemoria);
+    let trovato = false;
+    let id;
+    if (promemoria.length !== 0) {
+        do {
+            console.log("Inserire id (-1 per cancellare): ");
+            id = parseInt(prompt());
+            if (id === -1) {
+                console.log("Operazione di cancellazione annullata.");
+                break;
+            }
+            trovato = false;
+            for (let i in promemoria) {
+                if (promemoria[i].id === id) {
+                    promemoria.splice(i, 1);
+                    trovato = true;
+                    console.log(`Promemoria con ID ${id} cancellato.`);
+                    break;
+                }
+            }
+            if (!trovato) {
+                console.log("ID inserito non valido");
+            }
+        } while (!trovato);
+    } else {
+        console.log("Lista dei promemoria vuota");
+    }
 }
 
 export function mostraTutti(promemoria){
