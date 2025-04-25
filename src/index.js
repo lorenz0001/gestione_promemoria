@@ -7,18 +7,20 @@ let promemoria = [];
 let scelta = 0;
 
 do{
-    mostraPrimi();
-    console.log("Cosa vuoi fare?\n1)Aggiungere un promemoria\n2)Cancellare un promemoria\n3)Visualizzare tutti i promemoria\n4)Visualizzare/Modificare dettagli promemoria");
+    mostraPrimi(promemoria);
+    console.log("Cosa vuoi fare?\n1)Aggiungere un promemoria\n2)Cancellare un promemoria\n3)Visualizzare tutti i promemoria\n4)Visualizzare/Modificare dettagli promemoria\n0)Esci");
     scelta = parseInt(prompt());
     switch(scelta){
         case 1:
-            aggiungi();
+            aggiungi(promemoria, prompt);
             break;
         case 2:
-            cancella();
+            cancella(promemoria, prompt);
             break;
         case 3:
-            mostraTutti();
+            mostraTutti(promemoria);
+            break;
+        case 0:
             break;
         default:
             console.log("Scelta non valida");
