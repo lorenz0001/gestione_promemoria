@@ -1,12 +1,10 @@
 let id = 0;
 
-export function confrontaDate(data){
+let categorie = ["default","hobby", "lavoro", "personale"];
+
+export function confrontaDate(promemoria){
     const dataCorrente = new Date();
-    if (dataCorrente < data) {
-      return 1;
-    } else if (dataCorrente >= data) {
-      return 0;
-    }
+    return dataCorrente < promemoria.data ? 1 : 0;
 }
 
 function controllaEsiste(promemoria, nome){
@@ -18,7 +16,7 @@ function controllaEsiste(promemoria, nome){
 }
 
 export function aggiungi(promemoria, prompt){
-    let nome, anno, mese, giorno, ora, minuti, res;
+    let nome, anno, mese, giorno, ora, minuti, res, categoria;
     do{
         console.log("Inserire l'attività (frase breve e concisa): ");
         nome = prompt();
@@ -27,34 +25,45 @@ export function aggiungi(promemoria, prompt){
             console.log("Esiste già una attivita con questo nome");
     }while(res);
     console.log("Inserire l'anno scadenza: ");
-    anno = prompt();
+    anno = parseInt(prompt());
     do{
         console.log("Inserire il mese scadenza: ");
-        mese = prompt();
+        mese = parseInt(prompt());
     }while(mese <= 0 || mese > 12);
     console.log("Inserire il giorno scadenza: ");
-    giorno = prompt();
+    giorno = parseInt(prompt());
     console.log("Inserire l'ora scadenza: ");
-    ora = prompt();
+    ora = parseInt(prompt());
     console.log("Inserire minuti scadenza: ");
-    minuti = prompt();
-    console.log(anno + " " + mese + " " + giorno + " " + ora + " " +minuti);
+    minuti = parseInt(prompt());
+    console.log("Inserire categoria per il promemoria, invio per default");
+    categoria = prompt().toLowerCase();
+    if(categoria === "")
+        categoria = "default";
+    else if(!categorie.includes(categoria)){
+        console.log("Nuova categoria aggiunta: " + categoria);
+        categorie.push(categoria);
+    }
     let data = new Date(anno, mese - 1, giorno, ora, minuti);
-    promemoria.push({id:id,nome:nome,data:data});
-    promemoria.sort((a, b) => b.data - a.data);
+    promemoria.push({id:id,nome:nome,data:data,categoria:categoria});
+    promemoria.sort((a, b) => a.data - b.data);
     id += 1;
 }
 
 export function stampa(prom){
-    console.log("Promemoria id: " + prom.id + ",nome: " + prom.nome + ", " + prom.data);
+    console.log("Promemoria id: " + prom.id + ",nome: " + prom.nome + ", data scadenza: " + prom.data  + ", categoria: " + prom.categoria);
+}
+
+export function stampa2(prom){
+    console.log("Promemoria id: " + prom.id + ",nome: " + prom.nome + ", data scadenza: " + prom.data);
 }
 
 export function mostraPrimi(promemoria){
-    let i = 0;
-    for(let i=0;i<promemoria.length;i++){
-        if(confrontaDate(promemoria[i]) && i < 5){
+    let count = 0;
+    for (let i = 0; i < promemoria.length && count < 5; i++) {
+        if (confrontaDate(promemoria[i])) {
             stampa(promemoria[i]);
-            i+=1;
+            count++;
         }
     }
 }
@@ -90,7 +99,11 @@ export function cancella(promemoria, prompt) {
 }
 
 export function mostraTutti(promemoria){
-    for(let o of promemoria){
-        stampa(o);
+    for(let categoria of categorie){
+        console.log("Categoria: " + categoria)
+        for(let p of promemoria){
+            if(p.categoria == categoria)
+                stampa2(p);
+        }
     }
 }
