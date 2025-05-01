@@ -46,7 +46,6 @@ export function aggiungi(promemoria, prompt){
     }
     let data = new Date(anno, mese - 1, giorno, ora, minuti);
     promemoria.push({id:id,nome:nome,data:data,categoria:categoria});
-    promemoria.sort((a, b) => a.data - b.data);
     id += 1;
 }
 
@@ -59,11 +58,25 @@ export function stampa2(prom){
 }
 
 export function mostraPrimi(promemoria){
-    let count = 0;
-    for (let i = 0; i < promemoria.length && count < 5; i++) {
-        if (confrontaDate(promemoria[i])) {
-            stampa(promemoria[i]);
-            count++;
+    promemoria.sort((a, b) => a.data - b.data);
+
+    let c = 0;
+    if(promemoria.length != 0){
+        console.log("Primi promemoria prossimi alla scadenza");
+        for (let i = 0; i < promemoria.length && c < 5; i++) {
+            if (confrontaDate(promemoria[i])) {
+                stampa(promemoria[i]);
+                c++;
+            }
+        }
+    
+        c = 0;
+        console.log("Primi promemoria scaduti");
+        for (let i = promemoria.length - 1; i >= 0 && c < 5; i--) {
+            if (!confrontaDate(promemoria[i])) {
+                stampa(promemoria[i]);
+                c++;
+            }
         }
     }
 }
@@ -99,11 +112,30 @@ export function cancella(promemoria, prompt) {
 }
 
 export function mostraTutti(promemoria){
+    promemoria.sort((a, b) => a.data - b.data);
+    console.log("NON SCADUTI");
+
     for(let categoria of categorie){
-        console.log("Categoria: " + categoria)
+        let trovato = false;
         for(let p of promemoria){
-            if(p.categoria == categoria)
+            if(trovato)
+                console.log("Categoria: " + categoria)
+            if(p.categoria == categoria && confrontaDate(p)){
+                trovato = true;
                 stampa2(p);
+            }
+        }
+    }
+    console.log("SCADUTI");
+    for(let categoria of categorie){
+        let trovato = false;
+        for(let p of promemoria){
+            if(trovato)
+                console.log("Categoria: " + categoria)
+            if(p.categoria == categoria && !confrontaDate(p)){
+                trovato = true;
+                stampa2(p);
+            }
         }
     }
 }
