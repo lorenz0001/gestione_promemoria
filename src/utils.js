@@ -43,7 +43,7 @@ function controllaEsiste(promemoria, nome){
  */
 
 export function aggiungi(promemoria, prompt){
-    let nome, anno, mese, giorno, ora, minuti, res, categoria;
+    let nome, res, categoria;
     do{
         console.log("Inserire l'attività (frase breve e concisa): ");
         nome = prompt();
@@ -51,7 +51,7 @@ export function aggiungi(promemoria, prompt){
         if(res)
             console.log("Esiste già una attivita con questo nome");
     }while(res);
-    let data = creaData();
+    let data = creaData(prompt);
     console.log("Inserire categoria per il promemoria, invio per default");
     categoria = prompt().toLowerCase();
     if(categoria === "")
@@ -186,7 +186,7 @@ export function mostraTutti(promemoria){
     }
 }
 
-function creaData(){
+function creaData(prompt){
     let anno, mese, giorno, ora, minuti;
     let data;
     do {
@@ -241,7 +241,7 @@ export function modificaPromemoria(promemoria, prompt){
                             promemoria[i].nome = nome;
                             break;
                         case 2:
-                            promemoria[i].data = creaData();
+                            promemoria[i].data = creaData(prompt);
                             break;
                         case 3:
                             console.log("Inserire nuova categoria (invio per default): ");
