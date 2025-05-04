@@ -204,8 +204,8 @@ export function modificaPromemoria(promemoria, prompt){
     let id;
     let scelta;
     let nome;
-    let data;
     let anno, mese, giorno, ora, minuti;
+    let categoria;
     if (promemoria.length !== 0) {
         do {
             console.log("Inserire id (-1 per cancellare): ");
@@ -240,6 +240,17 @@ export function modificaPromemoria(promemoria, prompt){
                             minuti = parseInt(prompt());
 
                             promemoria[i].data = new Date(anno, mese - 1, giorno, ora, minuti);
+                            break;
+                        case 3:
+                            console.log("Inserire nuova categoria (invio per default): ");
+                            categoria = prompt().toLowerCase();
+                            if(categoria === "")
+                                categoria = "default";
+                            else if(!categorie.includes(categoria)){
+                                console.log("Nuova categoria aggiunta: " + categoria);
+                                categorie.push(categoria);
+                            }
+                            promemoria[i].categoria = categoria;
                             break;
                         default:
                             console.log("scelta non valida");
