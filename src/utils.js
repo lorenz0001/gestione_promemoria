@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Funzioni per la gestione dei promemoria
+ * @author Lorenzo D'Augello
+ */
+
 let id = 0;
 
 let categorie = ["default","hobby", "lavoro", "personale"];

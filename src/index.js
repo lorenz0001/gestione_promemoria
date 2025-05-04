@@ -1,5 +1,10 @@
+/**
+ * @fileoverview Programma per la gestione dei promemoria
+ * @author Lorenzo D'Augello
+ */
+
 import p from 'prompt-sync';
-import {confrontaDate,aggiungi,stampa,mostraPrimi,cancella,mostraTutti} from "./utils.js";
+import {aggiungi,mostraPrimi,cancella,mostraTutti} from "./utils.js";
 
 const prompt = p();
 
