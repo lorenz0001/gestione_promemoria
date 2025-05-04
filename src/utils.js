@@ -51,18 +51,7 @@ export function aggiungi(promemoria, prompt){
         if(res)
             console.log("Esiste già una attivita con questo nome");
     }while(res);
-    console.log("Inserire l'anno scadenza: ");
-    anno = parseInt(prompt());
-    do{
-        console.log("Inserire il mese scadenza: ");
-        mese = parseInt(prompt());
-    }while(mese <= 0 || mese > 12);
-    console.log("Inserire il giorno scadenza: ");
-    giorno = parseInt(prompt());
-    console.log("Inserire l'ora scadenza: ");
-    ora = parseInt(prompt());
-    console.log("Inserire minuti scadenza: ");
-    minuti = parseInt(prompt());
+    let data = creaData();
     console.log("Inserire categoria per il promemoria, invio per default");
     categoria = prompt().toLowerCase();
     if(categoria === "")
@@ -71,7 +60,6 @@ export function aggiungi(promemoria, prompt){
         console.log("Nuova categoria aggiunta: " + categoria);
         categorie.push(categoria);
     }
-    let data = new Date(anno, mese - 1, giorno, ora, minuti);
     promemoria.push({id:id,nome:nome,data:data,categoria:categoria});
     id += 1;
 }
@@ -198,13 +186,39 @@ export function mostraTutti(promemoria){
     }
 }
 
+function creaData(){
+    let anno, mese, giorno, ora, minuti;
+    let data;
+    do {
+        console.log("Inserire l'anno scadenza: ");
+        anno = parseInt(prompt());
+        do {
+            console.log("Inserire il mese scadenza: ");
+            mese = parseInt(prompt());
+        } while (mese <= 0 || mese > 12);
+        
+        console.log("Inserire il giorno scadenza: ");
+        giorno = parseInt(prompt());
+        console.log("Inserire l'ora scadenza: ");
+        ora = parseInt(prompt());
+        console.log("Inserire minuti scadenza: ");
+        minuti = parseInt(prompt());
+
+        data = new Date(anno, mese - 1, giorno, ora, minuti);
+        if (isNaN(data.getTime())) {
+            console.log("Data non valida, riprova.");
+        }
+    } while (isNaN(data.getTime()));
+    
+    return data;
+}
+
 export function modificaPromemoria(promemoria, prompt){
     mostraTutti(promemoria);
     let trovato = false;
     let id;
     let scelta;
     let nome;
-    let anno, mese, giorno, ora, minuti;
     let categoria;
     if (promemoria.length !== 0) {
         do {
@@ -217,8 +231,9 @@ export function modificaPromemoria(promemoria, prompt){
             trovato = false;
             for (let i in promemoria) {
                 if (promemoria[i].id === id) {
-                    console.log("Cosa vuoi modificare?: \n1) Per il nome\n2)Per la data scadenza\n3)Per cambiare la categoria\n");
-                    scelta = parseInt(promtp());
+                    trovato = true;
+                    console.log("Cosa vuoi modificare?: \n1) Nome\n2) Data scadenza\n3) Categoria\n");
+                    scelta = parseInt(prompt());
                     switch(scelta){
                         case 1:
                             console.log("Inserire il nuovo nome: ");
@@ -226,20 +241,7 @@ export function modificaPromemoria(promemoria, prompt){
                             promemoria[i].nome = nome;
                             break;
                         case 2:
-                            console.log("Inserire l'anno scadenza: ");
-                            anno = parseInt(prompt());
-                            do{
-                                console.log("Inserire il mese scadenza: ");
-                                mese = parseInt(prompt());
-                            }while(mese <= 0 || mese > 12);
-                            console.log("Inserire il giorno scadenza: ");
-                            giorno = parseInt(prompt());
-                            console.log("Inserire l'ora scadenza: ");
-                            ora = parseInt(prompt());
-                            console.log("Inserire minuti scadenza: ");
-                            minuti = parseInt(prompt());
-
-                            promemoria[i].data = new Date(anno, mese - 1, giorno, ora, minuti);
+                            promemoria[i].data = creaData();
                             break;
                         case 3:
                             console.log("Inserire nuova categoria (invio per default): ");

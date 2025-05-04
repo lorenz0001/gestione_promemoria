@@ -4,7 +4,7 @@
  */
 
 import p from 'prompt-sync';
-import {aggiungi,mostraPrimi,cancella,mostraTutti} from "./utils.js";
+import {aggiungi,mostraPrimi,cancella,mostraTutti, modificaPromemoria} from "./utils.js";
 
 const prompt = p();
 
