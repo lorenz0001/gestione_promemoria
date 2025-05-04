@@ -186,6 +186,14 @@ export function mostraTutti(promemoria){
     }
 }
 
+/**
+ * Funzione che crea oggetto date
+ * 
+ * @param {Array} promemoria - Vettore contenente gli oggetti promemoria
+ * @param {prompt} prompt - oggetto prompt-sync
+ * @returns {Date} - oggetto data
+ */
+
 function creaData(prompt){
     let anno, mese, giorno, ora, minuti;
     let data;
@@ -212,6 +220,13 @@ function creaData(prompt){
     
     return data;
 }
+
+/**
+ * Modifica il nome, data o categoria del promemoria
+ * 
+ * @param {Array} promemoria - Vettore contenente gli oggetti promemoria
+ * @param {prompt} prompt - oggetto prompt-sync
+ */
 
 export function modificaPromemoria(promemoria, prompt){
     mostraTutti(promemoria);

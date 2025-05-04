@@ -26,7 +26,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>let id = 0;
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Funzioni per la gestione dei promemoria
+ * @author Lorenzo D'Augello
+ */
+
+let id = 0;
 
 let categorie = ["default","hobby", "lavoro", "personale"];
 
@@ -66,7 +71,7 @@ function controllaEsiste(promemoria, nome){
  */
 
 export function aggiungi(promemoria, prompt){
-    let nome, anno, mese, giorno, ora, minuti, res, categoria;
+    let nome, res, categoria;
     do{
         console.log("Inserire l'attività (frase breve e concisa): ");
         nome = prompt();
@@ -74,18 +79,7 @@ export function aggiungi(promemoria, prompt){
         if(res)
             console.log("Esiste già una attivita con questo nome");
     }while(res);
-    console.log("Inserire l'anno scadenza: ");
-    anno = parseInt(prompt());
-    do{
-        console.log("Inserire il mese scadenza: ");
-        mese = parseInt(prompt());
-    }while(mese &lt;= 0 || mese > 12);
-    console.log("Inserire il giorno scadenza: ");
-    giorno = parseInt(prompt());
-    console.log("Inserire l'ora scadenza: ");
-    ora = parseInt(prompt());
-    console.log("Inserire minuti scadenza: ");
-    minuti = parseInt(prompt());
+    let data = creaData(prompt);
     console.log("Inserire categoria per il promemoria, invio per default");
     categoria = prompt().toLowerCase();
     if(categoria === "")
@@ -94,7 +88,6 @@ export function aggiungi(promemoria, prompt){
         console.log("Nuova categoria aggiunta: " + categoria);
         categorie.push(categoria);
     }
-    let data = new Date(anno, mese - 1, giorno, ora, minuti);
     promemoria.push({id:id,nome:nome,data:data,categoria:categoria});
     id += 1;
 }
@@ -219,6 +212,104 @@ export function mostraTutti(promemoria){
             }
         }
     }
+}
+
+/**
+ * Funzione che crea oggetto date
+ * 
+ * @param {Array} promemoria - Vettore contenente gli oggetti promemoria
+ * @param {prompt} prompt - oggetto prompt-sync
+ * @returns {Date} - oggetto data
+ */
+
+function creaData(prompt){
+    let anno, mese, giorno, ora, minuti;
+    let data;
+    do {
+        console.log("Inserire l'anno scadenza: ");
+        anno = parseInt(prompt());
+        do {
+            console.log("Inserire il mese scadenza: ");
+            mese = parseInt(prompt());
+        } while (mese &lt;= 0 || mese > 12);
+        
+        console.log("Inserire il giorno scadenza: ");
+        giorno = parseInt(prompt());
+        console.log("Inserire l'ora scadenza: ");
+        ora = parseInt(prompt());
+        console.log("Inserire minuti scadenza: ");
+        minuti = parseInt(prompt());
+
+        data = new Date(anno, mese - 1, giorno, ora, minuti);
+        if (isNaN(data.getTime())) {
+            console.log("Data non valida, riprova.");
+        }
+    } while (isNaN(data.getTime()));
+    
+    return data;
+}
+
+/**
+ * Modifica il nome, data o categoria del promemoria
+ * 
+ * @param {Array} promemoria - Vettore contenente gli oggetti promemoria
+ * @param {prompt} prompt - oggetto prompt-sync
+ */
+
+export function modificaPromemoria(promemoria, prompt){
+    mostraTutti(promemoria);
+    let trovato = false;
+    let id;
+    let scelta;
+    let nome;
+    let categoria;
+    if (promemoria.length !== 0) {
+        do {
+            console.log("Inserire id (-1 per cancellare): ");
+            id = parseInt(prompt());
+            if (id === -1) {
+                console.log("Operazione di modificazione annullata.");
+                break;
+            }
+            trovato = false;
+            for (let i in promemoria) {
+                if (promemoria[i].id === id) {
+                    trovato = true;
+                    console.log("Cosa vuoi modificare?: \n1) Nome\n2) Data scadenza\n3) Categoria\n");
+                    scelta = parseInt(prompt());
+                    switch(scelta){
+                        case 1:
+                            console.log("Inserire il nuovo nome: ");
+                            nome = prompt();
+                            promemoria[i].nome = nome;
+                            break;
+                        case 2:
+                            promemoria[i].data = creaData(prompt);
+                            break;
+                        case 3:
+                            console.log("Inserire nuova categoria (invio per default): ");
+                            categoria = prompt().toLowerCase();
+                            if(categoria === "")
+                                categoria = "default";
+                            else if(!categorie.includes(categoria)){
+                                console.log("Nuova categoria aggiunta: " + categoria);
+                                categorie.push(categoria);
+                            }
+                            promemoria[i].categoria = categoria;
+                            break;
+                        default:
+                            console.log("scelta non valida");
+                    }
+                    break;
+                }
+            }
+            if (!trovato) {
+                console.log("ID inserito non valido");
+            }
+        } while (!trovato);
+    } else {
+        console.log("Lista dei promemoria vuota");
+    }   
 }</code></pre>
         </article>
     </section>
@@ -229,13 +320,13 @@ export function mostraTutti(promemoria){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#aggiungi">aggiungi</a></li><li><a href="global.html#cancella">cancella</a></li><li><a href="global.html#confrontaDate">confrontaDate</a></li><li><a href="global.html#controllaEsiste">controllaEsiste</a></li><li><a href="global.html#mostraPrimi">mostraPrimi</a></li><li><a href="global.html#mostraTutti">mostraTutti</a></li><li><a href="global.html#stampa">stampa</a></li><li><a href="global.html#stampa2">stampa2</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#aggiungi">aggiungi</a></li><li><a href="global.html#cancella">cancella</a></li><li><a href="global.html#confrontaDate">confrontaDate</a></li><li><a href="global.html#controllaEsiste">controllaEsiste</a></li><li><a href="global.html#creaData">creaData</a></li><li><a href="global.html#modificaPromemoria">modificaPromemoria</a></li><li><a href="global.html#mostraPrimi">mostraPrimi</a></li><li><a href="global.html#mostraTutti">mostraTutti</a></li><li><a href="global.html#stampa">stampa</a></li><li><a href="global.html#stampa2">stampa2</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun May 04 2025 19:27:28 GMT+0200 (Ora legale dell’Europa centrale)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun May 04 2025 21:14:55 GMT+0200 (Ora legale dell’Europa centrale)
 </footer>
 
 <script> prettyPrint(); </script>
