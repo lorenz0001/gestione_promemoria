@@ -161,25 +161,27 @@ export function mostraTutti(promemoria){
     promemoria.sort((a, b) => a.data - b.data);
     console.log("NON SCADUTI");
 
-    for(let categoria of categorie){
+    for (let categoria of categorie) {
         let trovato = false;
-        for(let p of promemoria){
-            if(trovato)
-                console.log("Categoria: " + categoria)
-            if(p.categoria == categoria && confrontaDate(p)){
-                trovato = true;
+        for (let p of promemoria) {
+            if (p.categoria == categoria && confrontaDate(p)) {
+                if (!trovato) {
+                    console.log("Categoria: " + categoria);
+                    trovato = true;
+                }
                 stampa2(p);
             }
         }
     }
     console.log("SCADUTI");
-    for(let categoria of categorie){
+    for (let categoria of categorie) {
         let trovato = false;
-        for(let p of promemoria){
-            if(trovato)
-                console.log("Categoria: " + categoria)
-            if(p.categoria == categoria && !confrontaDate(p)){
-                trovato = true;
+        for (let p of promemoria) {
+            if (p.categoria == categoria && !confrontaDate(p)) {
+                if (!trovato) {
+                    console.log("Categoria: " + categoria);
+                    trovato = true;
+                }
                 stampa2(p);
             }
         }
