@@ -203,6 +203,9 @@ export function modificaPromemoria(promemoria, prompt){
     let trovato = false;
     let id;
     let scelta;
+    let nome;
+    let data;
+    let anno, mese, giorno, ora, minuti;
     if (promemoria.length !== 0) {
         do {
             console.log("Inserire id (-1 per cancellare): ");
@@ -214,17 +217,33 @@ export function modificaPromemoria(promemoria, prompt){
             trovato = false;
             for (let i in promemoria) {
                 if (promemoria[i].id === id) {
-                    console.log("Cosa vuoi modificare?: \n1) Per il nome\n2)Per la data scadenza\n");
+                    console.log("Cosa vuoi modificare?: \n1) Per il nome\n2)Per la data scadenza\n3)Per cambiare la categoria\n");
                     scelta = parseInt(promtp());
                     switch(scelta){
                         case 1:
+                            console.log("Inserire il nuovo nome: ");
+                            nome = prompt();
+                            promemoria[i].nome = nome;
                             break;
                         case 2:
+                            console.log("Inserire l'anno scadenza: ");
+                            anno = parseInt(prompt());
+                            do{
+                                console.log("Inserire il mese scadenza: ");
+                                mese = parseInt(prompt());
+                            }while(mese <= 0 || mese > 12);
+                            console.log("Inserire il giorno scadenza: ");
+                            giorno = parseInt(prompt());
+                            console.log("Inserire l'ora scadenza: ");
+                            ora = parseInt(prompt());
+                            console.log("Inserire minuti scadenza: ");
+                            minuti = parseInt(prompt());
+
+                            promemoria[i].data = new Date(anno, mese - 1, giorno, ora, minuti);
                             break;
                         default:
                             console.log("scelta non valida");
                     }
-
                     break;
                 }
             }
