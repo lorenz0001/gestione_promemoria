@@ -18,7 +18,7 @@ function main(){
             mostraPrimi(promemoria);
         else
             m = !m;
-        console.log("Cosa vuoi fare?\n1)Aggiungere un promemoria\n2)Cancellare un promemoria\n3)Visualizzare tutti i promemoria\n4)Visualizzare/Modificare dettagli promemoria\n0)Esci");
+        console.log("Cosa vuoi fare?\n1)Aggiungere un promemoria\n2)Cancellare un promemoria\n3)Visualizzare tutti i promemoria\n4)Modificare promemoria\n0)Esci");
         scelta = parseInt(prompt());
         switch(scelta){
             case 1:
@@ -30,6 +30,9 @@ function main(){
             case 3:
                 mostraTutti(promemoria);
                 m = true;
+                break;
+            case 4:
+                modificaPromemoria(promemoria, prompt);
                 break;
             case 0:
                 break;

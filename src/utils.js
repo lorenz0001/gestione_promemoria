@@ -197,3 +197,42 @@ export function mostraTutti(promemoria){
         }
     }
 }
+
+export function modificaPromemoria(promemoria, prompt){
+    mostraTutti(promemoria);
+    let trovato = false;
+    let id;
+    let scelta;
+    if (promemoria.length !== 0) {
+        do {
+            console.log("Inserire id (-1 per cancellare): ");
+            id = parseInt(prompt());
+            if (id === -1) {
+                console.log("Operazione di modificazione annullata.");
+                break;
+            }
+            trovato = false;
+            for (let i in promemoria) {
+                if (promemoria[i].id === id) {
+                    console.log("Cosa vuoi modificare?: \n1) Per il nome\n2)Per la data scadenza\n");
+                    scelta = parseInt(promtp());
+                    switch(scelta){
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            console.log("scelta non valida");
+                    }
+
+                    break;
+                }
+            }
+            if (!trovato) {
+                console.log("ID inserito non valido");
+            }
+        } while (!trovato);
+    } else {
+        console.log("Lista dei promemoria vuota");
+    }   
+}
