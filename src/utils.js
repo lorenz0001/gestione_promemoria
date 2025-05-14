@@ -207,12 +207,20 @@ function creaData(prompt){
             mese = parseInt(prompt());
         } while (mese <= 0 || mese > 12);
         
-        console.log("Inserire il giorno scadenza: ");
-        giorno = parseInt(prompt());
-        console.log("Inserire l'ora scadenza: ");
-        ora = parseInt(prompt());
-        console.log("Inserire minuti scadenza: ");
-        minuti = parseInt(prompt());
+        do{
+            console.log("Inserire il giorno scadenza: ");
+            giorno = parseInt(prompt());
+        }while(giorno <= 0);
+        
+        do{
+            console.log("Inserire l'ora scadenza: ");
+            ora = parseInt(prompt());
+        }while(ora < 0 || ora > 23);
+        
+        do{
+            console.log("Inserire minuti scadenza: ");
+            minuti = parseInt(prompt());
+        }while(minuti < 0 || minuti > 59);
 
         data = new Date(anno, mese - 1, giorno, ora, minuti);
         if (isNaN(data.getTime())) {
